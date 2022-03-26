@@ -6,10 +6,8 @@ import random
 from discord.ext import commands
 from datetime import datetime, time, timedelta
 import asyncio
-from dotenv import load_dotenv
 
-load_dotenv()
-DISCORD_TOKEN = os.getenv("discord_token")
+DISCORD_TOKEN = os.environ["discord_token"]
 
 intents = discord.Intents.default()
 intents.members = True
