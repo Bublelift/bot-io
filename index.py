@@ -83,7 +83,7 @@ async def polnoc():
     wybraniec = random.choice(kandydaci)
     await wybraniec.add_roles(chad_role)
 
-trigger = time(23, 00, 2)
+trigger = time(22, 00, 2) #23 dla czasu zimowego
 async def background_task():
     now = datetime.utcnow()
     if now.time() > trigger:  # Make sure loop doesn't start after {WHEN} as then it will send immediately the first time as negative seconds will make the sleep yield instantly
