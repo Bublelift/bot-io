@@ -1,11 +1,10 @@
-#from asyncio.windows_events import NULL
 from logging import exception
-from sqlite3 import Time
 import discord
 import os
 import random
-from discord.ext import commands, tasks
+from discord.ext import commands
 from datetime import datetime, time, timedelta
+import asyncio
 
 DISCORD_TOKEN = os.environ["discord_token"]
 
@@ -84,13 +83,24 @@ async def polnoc():
     wybraniec = random.choice(kandydaci)
     await wybraniec.add_roles(chad_role)
 
-
-@tasks.loop(seconds=1)
-async def bg_task():
+trigger = time(23, 00, 2)
+async def background_task():
     now = datetime.utcnow()
-    nower = now.strftime("%H:%M:%S")
-    if(nower == '23:00:01'):
-        await polnoc()
+    if now.time() > trigger:  # Make sure loop doesn't start after {WHEN} as then it will send immediately the first time as negative seconds will make the sleep yield instantly
+        tomorrow = datetime.combine(now.date() + timedelta(days=1), time(0))
+        seconds = (tomorrow - now).total_seconds()  # Seconds until tomorrow (midnight)
+        await asyncio.sleep(seconds)   # Sleep until tomorrow and then the loop will start 
+    while True:
+        now = datetime.utcnow() # You can do now() or a specific timezone if that matters, but I'll leave it with utcnow
+        target_time = datetime.combine(now.date(), trigger)  # 6:00 PM today (In UTC)
+        seconds_until_target = (target_time - now).total_seconds()
+        await asyncio.sleep(seconds_until_target)  # Sleep until we hit the target time
+        await polnoc()  # Call the helper function that sends the message
+        tomorrow = datetime.combine(now.date() + timedelta(days=1), time(0))
+        seconds = (tomorrow - now).total_seconds()  # Seconds until tomorrow (midnight)
+        await asyncio.sleep(seconds)
 
-bg_task.start()
+
+
+client.loop.create_task(background_task())
 client.run(DISCORD_TOKEN)
