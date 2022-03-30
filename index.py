@@ -18,6 +18,13 @@ async def on_ready():
     await client.change_presence(activity=discord.Game(name="Losowanie Chada"))
     print("Ready!")
 
+@client.command(aliases = ["ping"], brief = "Oznacza obecnego chada")
+async def kto(ctx):
+    chad_role = discord.utils.find(lambda x: x.name == "Chad", ctx.guild.roles)
+    for member in ctx.guild.members:
+        if chad_role in member.roles:
+            await ctx.send(f"Chadem jest {member.mention}")
+
 @client.command(brief = "Wyznacza losowo innego Chada. Tylko Chad może użyć tej komendy.")
 async def roll(ctx):#, user : discord.Member, *, role : discord.Role):
     chad_role = discord.utils.find(lambda x: x.name == "Chad", ctx.guild.roles)
