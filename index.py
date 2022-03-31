@@ -22,7 +22,7 @@ async def on_ready():
 async def test(ctx):
     chad_role = discord.utils.find(lambda x: x.name == "Chad", ctx.guild.roles)
     szukaj = discord.utils.find(lambda x: chad_role in x.roles, ctx.guild.members)
-    await ctx.send({szukaj.nickname})
+    await ctx.send({szukaj.display_name})
 
 @client.command(aliases = ["ping"], brief = "Oznacza obecnego chada")
 async def kto(ctx):
