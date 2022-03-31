@@ -18,6 +18,12 @@ async def on_ready():
     await client.change_presence(activity=discord.Game(name="Losowanie Chada"))
     print("Ready!")
 
+@client.command()
+async def test(ctx):
+    chad_role = discord.utils.find(lambda x: x.name == "Chad", ctx.guild.roles)
+    szukaj = discord.utils.find(lambda x: chad_role in x.roles, ctx.guild.members)
+    await ctx.send({szukaj.nickname})
+
 @client.command(aliases = ["ping"], brief = "Oznacza obecnego chada")
 async def kto(ctx):
     chad_role = discord.utils.find(lambda x: x.name == "Chad", ctx.guild.roles)
@@ -39,7 +45,7 @@ async def roll(ctx):#, user : discord.Member, *, role : discord.Role):
                 await member.remove_roles(chad_role)
         wybraniec = random.choice(kandydaci)
         await wybraniec.add_roles(chad_role)
-        await ctx.send(f"Nowym chadem jest {wybraniec.display_name}")
+        await ctx.send(f"Nowym chadem jest {wybraniec.mention}")
     else:
         return await ctx.send("Nie możesz tego zrobić.")
 
@@ -86,9 +92,11 @@ async def polnoc():
             kandydaci.append(member)
         if chad_role in member.roles:
             await member.remove_roles(chad_role)
-    
     wybraniec = random.choice(kandydaci)
     await wybraniec.add_roles(chad_role)
+    kanal = discord.utils.find(lambda x: x.name == "ja-robot", piaskownica.channels)
+    await kanal.send(f"Od teraz dzierżysz władzę {wybraniec.mention}")
+
 
 trigger = time(22, 00, 2) #23 dla czasu zimowego
 async def background_task():
