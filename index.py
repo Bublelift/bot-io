@@ -18,18 +18,11 @@ async def on_ready():
     await client.change_presence(activity=discord.Game(name="Losowanie Chada"))
     print("Ready!")
 
-@client.command()
-async def test(ctx):
-    chad_role = discord.utils.find(lambda x: x.name == "Chad", ctx.guild.roles)
-    szukaj = discord.utils.find(lambda x: chad_role in x.roles, ctx.guild.members)
-    await ctx.send({szukaj.display_name})
-
 @client.command(aliases = ["ping"], brief = "Oznacza obecnego chada")
 async def kto(ctx):
     chad_role = discord.utils.find(lambda x: x.name == "Chad", ctx.guild.roles)
-    for member in ctx.guild.members:
-        if chad_role in member.roles:
-            await ctx.send(f"Chadem jest {member.mention}")
+    current_chad = discord.utils.find(lambda x: chad_role in x.roles, ctx.guild.members)
+    await ctx.send(f"Chadem jest {current_chad.mention}")
 
 @client.command(brief = "Wyznacza losowo innego Chada. Tylko Chad może użyć tej komendy.")
 async def roll(ctx):#, user : discord.Member, *, role : discord.Role):
@@ -57,9 +50,8 @@ async def przekaż(ctx, user : discord.Member):
         aktywista = discord.utils.find(lambda x: x.name == "Aktywista", ctx.guild.roles)
         if aktywista not in user.roles:
             return await ctx.send("To nie jest kandydat do roli Chada.")
-        for member in ctx.guild.members:
-            if chad_role in member.roles:
-                await member.remove_roles(chad_role)
+        current_chad = discord.utils.find(lambda x: chad_role in x.roles, ctx.guild.members)
+        current_chad.remove_roles(chad_role)
         await user.add_roles(chad_role)
         await ctx.send("Ok :)")
     else:
