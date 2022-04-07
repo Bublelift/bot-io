@@ -16,7 +16,7 @@ client = commands.Bot(intents=intents, command_prefix="!")
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Game(name="Losowanie Chada"))
-    print("Ready!")
+    print("Bot ready!")
 
 @client.command(aliases = ["ping"], brief = "Oznacza obecnego chada")
 async def kto(ctx):
@@ -51,7 +51,7 @@ async def przekaż(ctx, user : discord.Member):
         if aktywista not in user.roles:
             return await ctx.send("To nie jest kandydat do roli Chada.")
         current_chad = discord.utils.find(lambda x: chad_role in x.roles, ctx.guild.members)
-        current_chad.remove_roles(chad_role)
+        await current_chad.remove_roles(chad_role)
         await user.add_roles(chad_role)
         await ctx.send("Ok :)")
     else:
