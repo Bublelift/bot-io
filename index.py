@@ -38,7 +38,7 @@ async def roll(ctx):#, user : discord.Member, *, role : discord.Role):
                 await member.remove_roles(chad_role)
         wybraniec = random.choice(kandydaci)
         await wybraniec.add_roles(chad_role)
-        await ctx.send(f"Nowym chadem jest {wybraniec.mention}")
+        await announce(wybraniec)
     else:
         return await ctx.send("Nie możesz tego zrobić.")
 
@@ -53,7 +53,7 @@ async def przekaż(ctx, user : discord.Member):
         current_chad = discord.utils.find(lambda x: chad_role in x.roles, ctx.guild.members)
         await current_chad.remove_roles(chad_role)
         await user.add_roles(chad_role)
-        await ctx.send("Ok :)")
+        await ctx.send("Ok :smiling_face_with_tear:")
     else:
         return await ctx.send("Nie możesz tego zrobić.")
 
@@ -86,9 +86,46 @@ async def polnoc():
             await member.remove_roles(chad_role)
     wybraniec = random.choice(kandydaci)
     await wybraniec.add_roles(chad_role)
-    kanal = discord.utils.find(lambda x: x.name == "ja-robot", piaskownica.channels)
-    await kanal.send(f"Od teraz dzierżysz władzę {wybraniec.mention}")
+    await announce(wybraniec)
 
+async def announce(wybraniec):
+    piaskownica = client.get_guild(473907456007995403)
+    kanal = discord.utils.find(lambda x: x.name == "ja-robot", piaskownica.channels)
+    content = random.choice(
+        [f"Nowym Chadem jest {wybraniec.mention}.", 
+        f"Od teraz dzierżysz władzę {wybraniec.mention}!",
+        f"{wybraniec.mention} osiąga ponad 9000 poziom :open_mouth:",
+        f"{wybraniec.mention} ma teraz prawo do rozstawiania wszystkich po kątach",
+        f"To ptak? To samolot? Nie, to {wybraniec.mention} spuszcza na nas bombę!",
+        f"{wybraniec.mention} wygrywa totalnie demokratyczne wybory",
+        f"Uważajcie na {wybraniec.mention}, może zrobić krzywdę!",
+        f"{wybraniec.mention} na mocy prawa niespodzianki zostaje dzisiaj Chadem.",
+        f"Jakie uniwersum wymyśli nam dzisiaj {wybraniec.mention}?",
+        f"Chadowy outfit {wybraniec.mention} :wink:",
+        f"Dzisiaj {wybraniec.mention} będzie wyjaśniać frajerów :sunglasses:",
+        f"Habemus Chadam! {wybraniec.mention} I!",
+        f"{wybraniec.mention} wychodował bujną brodę.",
+        f"Dzisiaj {wybraniec.mention} ma zawsze rację :shrug:",
+        f"{wybraniec.mention} włącza godmode na 24h.",
+        f"Główną nagrodę Lotto zgarnia dzisiaj {wybraniec.mention}! Wielkie brawa!",
+        f"Chodząca doskonałość? Tak, to {wybraniec.mention} :heart:",
+        f"Jeszcze gdy chodziłem do podstawówki, to był tam taki {wybraniec.mention} i ja jechałem na rowerze, i go spotkałem, i potem jeszcze pojechałem do biedronki na lody, i po drodze do domu wtedy jeszcze, już do domu pojechałem.",
+        f"{wybraniec.mention} przejmuje wszystkie akcje Tesli",
+        f"Oddajcie pokłon {wybraniec.mention}",
+        f"Mamo nie sprzątaj. {wybraniec.mention} pozamiatał XDDDDDD",
+        f"Hej {wybraniec.mention}, zrób coś fajnego :grinning:",
+        f"{wybraniec.mention} ma w posiadaniu kamień nieskończoności",
+        f"Lepiej zapnijcie pasy, {wybraniec.mention} zaczyna swoją kadencję",
+        f"chciałem powiedzieć tu coś kreatywnego, ale nie \n||Chadem jest {wybraniec.mention}||",
+        f"Masz tę moc {wybraniec.mention}!",
+        f"**TOP 10 najfajniejszych ludzi na świecie.** \n1: {wybraniec.mention}",
+        f"Wyobrażacie sobie świat bez {wybraniec.mention}? Ja też nie.",
+        f"Dzwoni papuga, mówi że chce autograf od {wybraniec.mention}",
+        f"Przychodzi {wybraniec.mention} do lekarza, a lekarz aż się schował.",
+        f"Prezydent uhonorował {wybraniec.mention} odznaką Virtutti Chadari :crown:",
+        f"Nowy bestseller J.K.Rowling: 'Ludzie sukcesu. Być jak {wybraniec.mention}'"
+        ])
+    await kanal.send(content)
 
 trigger = time(22, 00, 2) #23 dla czasu zimowego
 async def background_task():
