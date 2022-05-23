@@ -80,10 +80,10 @@ async def polnoc():
     aktywista = discord.utils.find(lambda x: x.name == "Aktywista", piaskownica.roles)
     kandydaci = []
     for member in piaskownica.members:
-        if aktywista in member.roles:
-            kandydaci.append(member)
         if chad_role in member.roles:
             await member.remove_roles(chad_role)
+        elif aktywista in member.roles:
+            kandydaci.append(member)
     wybraniec = random.choice(kandydaci)
     await wybraniec.add_roles(chad_role)
     await announce(wybraniec)
@@ -122,6 +122,9 @@ async def announce(wybraniec):
         f"Wyobrażacie sobie świat bez {wybraniec.mention}? Ja też nie.",
         f"Dzwoni papuga, mówi że chce autograf od {wybraniec.mention}",
         f"Przychodzi {wybraniec.mention} do lekarza, a lekarz aż się schował.",
+        f"{wybraniec.mention} nauczył się strzelać laserem z dupy!",
+        f"Tajny agent {wybraniec.mention} rozpoczyna obalanie komuny",
+        f"{wybraniec.mention} nie mógł się doczekać awansu",
         f"Prezydent uhonorował {wybraniec.mention} odznaką Virtutti Chadari :crown:",
         f"Nowy bestseller J.K.Rowling: 'Ludzie sukcesu. Być jak {wybraniec.mention}'"
         ])
