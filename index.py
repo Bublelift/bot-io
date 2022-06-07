@@ -27,7 +27,7 @@ async def kto(ctx):
 @client.command(brief = "Wyznacza losowo innego Chada. Tylko Chad może użyć tej komendy.")
 async def roll(ctx):#, user : discord.Member, *, role : discord.Role):
     chad_role = discord.utils.find(lambda x: x.name == "Chad", ctx.guild.roles)
-    admin = discord.utils.find(lambda x: x.name == "Bąbel", ctx.guild.roles)
+    admin = discord.utils.find(lambda x: x.id == 693164199261503569, ctx.guild.roles)
     if chad_role in ctx.message.author.roles or admin in ctx.message.author.roles:
         aktywista = discord.utils.find(lambda x: x.name == "Aktywista", ctx.guild.roles)
         kandydaci = []
@@ -45,7 +45,7 @@ async def roll(ctx):#, user : discord.Member, *, role : discord.Role):
 @client.command(aliases = ["przekaz", "oddaj", "daj"], brief = "Oddaje rolę Chada oznaczonej osobie. Tylko Chad może użyć tej komendy.")
 async def przekaż(ctx, user : discord.Member):
     chad_role = discord.utils.find(lambda x: x.name == "Chad", ctx.guild.roles)
-    admin = discord.utils.find(lambda x: x.name == "Bąbel", ctx.guild.roles)
+    admin = discord.utils.find(lambda x: x.id == 693164199261503569, ctx.guild.roles)
     if chad_role in ctx.message.author.roles or admin in ctx.message.author.roles:
         aktywista = discord.utils.find(lambda x: x.name == "Aktywista", ctx.guild.roles)
         if aktywista not in user.roles:
@@ -122,7 +122,7 @@ async def announce(wybraniec):
         f"Wyobrażacie sobie świat bez {wybraniec.mention}? Ja też nie.",
         f"Dzwoni papuga, mówi że chce autograf od {wybraniec.mention}",
         f"Przychodzi {wybraniec.mention} do lekarza, a lekarz aż się schował.",
-        f"{wybraniec.mention} nauczył się strzelać laserem z dupy!",
+        f"{wybraniec.mention} nauczył się strzelać laserem z tyłu!",
         f"Tajny agent {wybraniec.mention} rozpoczyna obalanie komuny",
         f"{wybraniec.mention} nie mógł się doczekać awansu",
         f"Prezydent uhonorował {wybraniec.mention} odznaką Virtutti Chadari :crown:",
