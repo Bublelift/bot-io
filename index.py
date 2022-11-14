@@ -6,7 +6,7 @@ from discord.ext import commands
 from datetime import datetime, time, timedelta
 import asyncio
 
-DISCORD_TOKEN = os.environ["discord_token"]
+DISCORD_TOKEN = os.environ["DISCORD_TOKEN"]
 
 intents = discord.Intents.default()
 intents.members = True
@@ -130,7 +130,7 @@ async def announce(wybraniec):
         ])
     await kanal.send(content)
 
-trigger = time(23, 00, 2) #22 dla czasu letniego
+trigger = time(22, 00, 2) #23 dla czasu zimowego
 async def background_task():
     now = datetime.utcnow()
     if now.time() > trigger:  # Make sure loop doesn't start after {WHEN} as then it will send immediately the first time as negative seconds will make the sleep yield instantly
@@ -148,12 +148,6 @@ async def background_task():
         await asyncio.sleep(seconds)
 
 
-# client.loop.create_task(background_task())
-# client.run(DISCORD_TOKEN)
 
-async def run():
-    async with client:
-        client.loop.create_task(background_task())
-        await client.start(DISCORD_TOKEN)
-
-asyncio.run(run())
+client.loop.create_task(background_task())
+client.run(DISCORD_TOKEN)
