@@ -130,7 +130,7 @@ async def announce(wybraniec):
         ])
     await kanal.send(content)
 
-trigger = time(22, 00, 2) #23 dla czasu zimowego
+trigger = time(23, 00, 2) #22 dla czasu letniego
 async def background_task():
     now = datetime.utcnow()
     if now.time() > trigger:  # Make sure loop doesn't start after {WHEN} as then it will send immediately the first time as negative seconds will make the sleep yield instantly
@@ -148,6 +148,12 @@ async def background_task():
         await asyncio.sleep(seconds)
 
 
+# client.loop.create_task(background_task())
+# client.run(DISCORD_TOKEN)
 
-client.loop.create_task(background_task())
-client.run(DISCORD_TOKEN)
+async def run():
+    async with client:
+        client.loop.create_task(background_task())
+        await client.start(DISCORD_TOKEN)
+
+asyncio.run(run())
